@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AngleSharp.Dom.Html;
+using ParserAutoZone54.Core.Interfaces;
+
+namespace ParserAutoZone54.Core.AutoZone54
+{
+    class AutoParser : IParser<string[]>
+    {
+        public string[] Parse(IHtmlDocument document)
+        {
+            var list = new List<string>();
+            var items = document.QuerySelectorAll("a").Where(item => item.GetAttribute("href") != null);
+
+            foreach(var item in items)
+            {
+                list.Add(item.TextContent);
+            }
+
+            return list.ToArray();
+        }
+    }
+}
